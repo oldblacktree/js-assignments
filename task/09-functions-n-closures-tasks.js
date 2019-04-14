@@ -26,7 +26,9 @@
  *
  */
 function getComposition(f,g) {
-    throw new Error('Not implemented');
+    return function(...rest){
+        return f(g(...rest))
+    }
 }
 
 
@@ -47,7 +49,9 @@ function getComposition(f,g) {
  *
  */
 function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+    return function(x){
+        return Math.pow(x,exponent)
+    }
 }
 
 
@@ -64,9 +68,28 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-    throw new Error('Not implemented');
+function getPolynom(a,b,c) {
+    function getPokemon(x) {
+        return a * x * x + b * x + c
+    }
+    switch(arguments.length) {
+        case 2:
+            c = b;
+            b = a;
+            a = 0;
+            break;
+        case 1:
+            c = a;
+            b = 0;
+            a = 0;
+            break;
+        case 0:
+            return null;
+    }
+
+    return getPokemon;   
 }
+
 
 
 /**
@@ -84,7 +107,10 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    let cache = func()
+    return function(){
+        return cache;
+    }
 }
 
 
@@ -149,8 +175,12 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
+function partialUsingArguments(fn, ...rest) {
+    let arg = rest;
+    return function(...rest){
+        arg = arg.concat(rest)
+        return fn(...arg)
+    }
 }
 
 
@@ -171,7 +201,10 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+    let counter = startFrom;
+    return function(){
+        return counter++
+    }
 }
 
 
